@@ -1,0 +1,69 @@
+create TABLE cliente(
+    codclient int PRIMARY KEY AUTO_INCREMENT,
+    cliente varchar(255) not null,
+    email varchar(100) UNIQUE not null,
+    CPF varchar(100) UNIQUE not null);
+    
+create TABLE quarto(
+    codquarto int PRIMARY KEY AUTO_INCREMENT,
+    quarto varchar(255) not null,
+    andar varchar(100) UNIQUE not null,
+    tipo varchar(100) UNIQUE not null);
+    
+create TABLE servico(
+    codservico int PRIMARY KEY AUTO_INCREMENT,
+    servico varchar(255) not null,
+    qtd int not null,
+    quantidade int not null,
+    valor decimal(7,2) not null);
+    
+create TABLE hospedagem(
+    idhospedagem int PRIMARY KEY AUTO_INCREMENT,
+    dataentrada date not null,
+    datasaida date,
+    horaentrada time not null,
+    horasaida time,
+    codclie int,
+    codquarto int,
+    FOREIGN KEY (codclie) REFERENCES cliente(codclient),
+    FOREIGN KEY (codquarto) REFERENCES quarto(codquarto),
+    totalhospedagem decimal(7,2));
+    
+create TABLE servicohospedagem(
+    idhospedagem int,
+    idservico int,
+    dataservico date,
+    horaservico time,
+    horasaida time,
+    FOREIGN KEY (idhospedagem) REFERENCES hospedagem(idhospedagem),
+    FOREIGN KEY (idservico) REFERENCES servico(codservico),
+    totalhospedagem decimal(7,2));
+
+INSERT INTO cliente (cliente, CPF, email) VALUES
+('Gustavo Nunes','333.666.999.66','gustavo@gmail.com'),
+('jeffrey dahamer','433.666.999.86','gustavo@gmail.com'),
+('jean pierre polnfareff','533.666.999.76','gustavo@gmail.com'),
+('joaquim joãoestrela','633.666.999.56','gustavo@gmail.com'),
+('timoti timerious','733.666.999.36','gustavo@gmail.com');
+
+INSERT into quarto (quarto, andar, tipo) VALUES
+('11','1º andar', 'familia - 1 cama'),
+('12','2º andar', 'familia - 2 camas'),
+('13','3º andar', 'familia - 3 camas'),
+('14','4º andar', 'familia - 1 cama'),
+('15','5º andar', 'familia - 2 camas'),
+('16','6º andar', 'familia - 3 camas'),
+('17','7º andar', 'famillia - cama'),
+('18','8º andar', 'famillia - 4 camas'),
+('19','9º andar', 'famillia - 2 camas'),
+('20','10º andar', 'casal - cama solteiro'),
+('21','11º andar', 'cassal - cama solteiro'),
+('22','12º andar', 'familia - suit master'),
+('23','13º andar', 'familia - suit master pro'),
+('24','14º andar', 'suit presidencial');
+
+INSERT INTO servico (servico, tipo, valor) VALUES
+('coca-cola', 'bebida',5.00),
+('coca-cola 2L', 'bebida',20.00),
+('café pequeno', 'bebida',5.00),
+('corte de cabelo', 'cuidados pessoais',30.00);
